@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simple Login</title>
+    <style>
+      :root{--bg:#f4f7fb;--card:#ffffff;--accent:#2563eb;--muted:#6b7280}
+      *{box-sizing:border-box}
+      body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:#111;background:linear-gradient(180deg,var(--bg),#eef3ff);display:flex;align-items:center;justify-content:center;height:100vh}
+      .container{width:100%;max-width:420px;padding:24px}
+      .card{background:var(--card);border-radius:12px;box-shadow:0 6px 24px rgba(16,24,40,0.08);padding:28px}
+      h1{margin:0 0 8px;font-size:20px}
+      p.lead{margin:0 0 18px;color:var(--muted);font-size:14px}
+      label{display:block;font-size:13px;margin-bottom:6px}
+      input[type="email"],input[type="password"]{width:100%;padding:10px 12px;border:1px solid #e6e9ef;border-radius:8px;font-size:14px}
+      .row{display:flex;gap:12px;align-items:center;margin:14px 0}
+      .actions{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+      .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
+      .btn:disabled{opacity:.6;cursor:not-allowed}
+      .muted{color:var(--muted);font-size:13px}
+      .success{background:#ecfdf5;border:1px solid #bbf7d0;color:#065f46;padding:10px;border-radius:8px;margin-top:14px}
+      .error{background:#fff1f2;border:1px solid #fecaca;color:#991b1b;padding:10px;border-radius:8px;margin-top:14px}
+      @media (max-width:420px){.container{padding:16px}.card{padding:20px}}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card" role="main" aria-labelledby="loginTitle">
+        <h1 id="loginTitle">Sign in to your account</h1>
+        <p class="lead">Enter your email and password to continue.</p>
+
+        <form id="loginForm" novalidate>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email" />
+          </div>
+
+          <div style="margin-top:12px">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Enter password" required autocomplete="current-password" />
+          </div>
+
+          <div class="row">
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px"><input type="checkbox" id="remember" /> Remember me</label>
+            <a href="#" style="color:var(--accent);font-size:13px;text-decoration:none">Forgot?</a>
+          </div>
+
+          <div class="actions">
+            <span class="muted">Demo: any non-empty values work</span>
+            <button class="btn" type="submit" id="submitBtn">Sign in</button>
+          </div>
+
+          <div id="message" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById('loginForm');
+      const msg = document.getElementById('message');
+      const submitBtn = document.getElementById('submitBtn');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        msg.textContent = '';
+        msg.className = '';
+
+        const email = form.email.value.trim();
+        const password = form.password.value.trim();
+
+        if (!email || !password) {
+          msg.className = 'error';
+          msg.textContent = 'Please enter both email and password.';
+          return;
+        }
+
+        submitBtn.disabled = true;
+
+        // Simulate async login
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          // Demo: accept any credentials; show success
+          msg.className = 'success';
+          msg.textContent = 'Signed in successfully (demo).';
+          form.reset();
+        }, 700);
+      });
+    </script>
+  </body>
+</html>
